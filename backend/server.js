@@ -1,16 +1,23 @@
 // server.js
 
 const express = require("express");
-const bodyParser = require("body-parser");
 const dotenv = require("dotenv").config();
 const cors = require("cors");
-const JobController = require("./controllers/jobControllers");
 const errorHandler = require("./middleware/errorHandler");
 const connectDb = require("./config/dbConnection");
 // const DriverController = require("./controllers/driverController");
-
+const mongoose = require("mongoose");
 // Connect to MongoDB
-connectDb();
+// connectDb();
+
+mongoose
+  .connect(process.env.CONNECTION_STRING, { useNewUrlParser: true })
+  .then(() => {
+    console.log("MongoDB is Connected..");
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
 
 const app = express();
 app.use(cors());
